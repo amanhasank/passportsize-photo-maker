@@ -6,7 +6,15 @@
     <style>
         body { font-family: sans-serif; max-width:500px; margin:20px auto; background:#f8f8f8; padding:30px; border-radius:10px;}
         .form-group { margin-bottom:18px; }
-        button { padding:10px 25px; }
+        button { padding:10px 25px; font-size:1rem; border-radius:6px; border:none; background:#1976d2; color:white; cursor:pointer; transition:background 0.2s; }
+        button:hover { background:#125ea2; }
+        input[type="file"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; box-sizing:border-box; }
+        label { font-weight:600; }
+        @media (max-width: 600px) {
+            body { max-width:100%; padding:10px; border-radius:0; }
+            h2 { font-size:1.3rem; }
+            button { width:100%; padding:14px 0; font-size:1.1rem; }
+        }
     </style>
 </head>
 <body>

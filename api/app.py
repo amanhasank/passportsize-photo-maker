@@ -52,12 +52,12 @@ def compose_sheet(img, n):
 def create_pdf_sheet(img_pil):
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=A4)
-    img_pil.save("temp.jpg", "JPEG")
-    c.drawImage("temp.jpg", 0, 0, A4[0], A4[1])
+    img_pil.save("/tmp/temp.jpg", "JPEG")
+    c.drawImage("/tmp/temp.jpg", 0, 0, A4[0], A4[1])
     c.showPage()
     c.save()
     buf.seek(0)
-    os.remove("temp.jpg")
+    os.remove("/tmp/temp.jpg")
     return buf
 
 @app.route('/', methods=['GET', 'POST'])
@@ -81,6 +81,3 @@ def pdf():
     sheet = compose_sheet(img, num)
     pdf_bytes = create_pdf_sheet(sheet)
     return send_file(pdf_bytes, mimetype='application/pdf', as_attachment=True, download_name='passport_sheet.pdf')
-
-if __name__ == '__main__':
-    app.run()
