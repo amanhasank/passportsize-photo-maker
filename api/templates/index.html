@@ -4,43 +4,139 @@
     <meta charset="UTF-8">
     <title>Passport Photo Sheet Generator</title>
     <style>
-        body { font-family: sans-serif; max-width:500px; margin:20px auto; background:#f8f8f8; padding:30px; border-radius:10px;}
-        .form-group { margin-bottom:18px; }
-        button { padding:10px 25px; font-size:1rem; border-radius:6px; border:none; background:#1976d2; color:white; cursor:pointer; transition:background 0.2s; }
-        button:hover { background:#125ea2; }
-        input[type="file"], input[type="number"] { width:100%; padding:10px; font-size:1rem; border-radius:5px; border:1px solid #ccc; box-sizing:border-box; }
-        label { font-weight:600; }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.18);
+            padding: 36px 32px 28px 32px;
+            max-width: 420px;
+            width: 100%;
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        h2 {
+            text-align: center;
+            color: #1976d2;
+            margin-bottom: 18px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .form-group { margin-bottom: 18px; }
+        label { font-weight: 600; color: #333; }
+        input[type="file"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 7px;
+            border: 1px solid #bdbdbd;
+            box-sizing: border-box;
+            margin-top: 6px;
+            background: #f5faff;
+            transition: border 0.2s;
+        }
+        input[type="file"]::-webkit-file-upload-button {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        input[type="file"]::file-selector-button {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        input[type="file"]:focus, input[type="number"]:focus {
+            outline: none;
+            border: 1.5px solid #1976d2;
+        }
+        button {
+            width: 100%;
+            padding: 14px 0;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+            margin-top: 8px;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.16);
+        }
+        .note {
+            opacity: .8;
+            font-size: 14px;
+            color: #1976d2;
+            text-align: center;
+            margin-top: 10px;
+        }
         @media (max-width: 600px) {
-            body { max-width:100%; padding:10px; border-radius:0; }
-            h2 { font-size:1.3rem; }
-            button { width:100%; padding:14px 0; font-size:1.1rem; }
+            .container {
+                padding: 18px 6px 16px 6px;
+                max-width: 98vw;
+                border-radius: 0;
+                margin: 0;
+            }
+            h2 { font-size: 1.3rem; }
+            button { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <h2>Passport Photo Sheet Generator</h2>
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label>Upload Image:</label><br>
-            <input type="file" name="image" accept="image/*" required>
+    <div class="container">
+        <h2>Passport Photo Sheet Generator</h2>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Upload Image:</label><br>
+                <input type="file" name="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label>Number of passport size photos on A4:</label><br>
+                <input type="number" name="number" value="24" min="1" max="50" required>
+            </div>
+            <button type="submit">Download JPEG</button>
+        </form>
+        <form action="/pdf" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>PDF Output:</label><br>
+                <input type="file" name="image" accept="image/*" required>
+                <input type="number" name="number" value="24" min="1" max="50" required>
+            </div>
+            <button type="submit">Download PDF</button>
+        </form>
+        <div class="note">
+            The sheet will be auto-enhanced and ready for print (A4, 300 DPI).
         </div>
-        <div class="form-group">
-            <label>Number of passport size photos on A4:</label><br>
-            <input type="number" name="number" value="24" min="1" max="50" required>
-        </div>
-        <button type="submit">Download JPEG</button>
-    </form>
-    <br>
-    <form action="/pdf" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label>PDF Output:</label><br>
-            <input type="file" name="image" accept="image/*" required>
-            <input type="number" name="number" value="24" min="1" max="50" required>
-        </div>
-        <button type="submit">Download PDF</button>
-    </form>
-    <p style="opacity:.7;font-size:13px;">
-        The sheet will be auto-enhanced and ready for print (A4, 300 DPI).
-    </p>
+    </div>
 </body>
 </html>
