@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passport Photo Sheet Generator</title>
+    <style>
+        body { font-family: sans-serif; max-width:500px; margin:20px auto; background:#f8f8f8; padding:30px; border-radius:10px;}
+        .form-group { margin-bottom:18px; }
+        button { padding:10px 25px; }
+    </style>
+</head>
+<body>
+    <h2>Passport Photo Sheet Generator</h2>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Upload Image:</label><br>
+            <input type="file" name="image" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label>Number of passport size photos on A4:</label><br>
+            <input type="number" name="number" value="24" min="1" max="50" required>
+        </div>
+        <button type="submit">Download JPEG</button>
+    </form>
+    <br>
+    <form action="/pdf" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>PDF Output:</label><br>
+            <input type="file" name="image" accept="image/*" required>
+            <input type="number" name="number" value="24" min="1" max="50" required>
+        </div>
+        <button type="submit">Download PDF</button>
+    </form>
+    <p style="opacity:.7;font-size:13px;">
+        The sheet will be auto-enhanced and ready for print (A4, 300 DPI).
+    </p>
+</body>
+</html>
